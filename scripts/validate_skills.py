@@ -186,23 +186,27 @@ class Validator:
         """The plugin and its marketplace entry carry one version, and skills point at ./skills/."""
         plugin_path = repo / ".claude-plugin" / "plugin.json"
         market_path = repo / ".claude-plugin" / "marketplace.json"
+        plugin_text = self._read_text(plugin_path)
+        market_text = self._read_text(market_path)
+        if plugin_text is None or market_text is None:
+            return
         try:
-            plugin = json.loads(plugin_path.read_text(encoding="utf-8"))
-            market = json.loads(market_path.read_text(encoding="utf-8"))
-        except (OSError, UnicodeError, json.JSONDecodeError) as error:
-            self.add("ERROR", plugin_path.parent, 0, "plugin-version", f"cannot read plugin manifests: {error}")
+            plugin = json.loads(plugin_text)
+            market = json.loads(market_text)
+        except json.JSONDecodeError as error:
+            self.add("ERROR", plugin_path.parent, 0, "plugin-version", f"cannot parse plugin manifests: {error}")
             return
         if not isinstance(plugin, dict) or not isinstance(market, dict):
             self.add("ERROR", plugin_path, 0, "plugin-version", "plugin manifests must be JSON objects")
             return
         name, version = plugin.get("name"), plugin.get("version")
-        entries = [
-            entry
-            for entry in market.get("plugins", [])
-            if isinstance(entry, dict) and entry.get("name") == name
-        ]
-        if not version:
-            self.add("ERROR", plugin_path, 0, "plugin-version", "plugin.json has no version")
+        plugins = market.get("plugins")
+        if not isinstance(plugins, list):
+            self.add("ERROR", market_path, 0, "plugin-version", 'marketplace.json "plugins" must be a list')
+            plugins = []
+        entries = [entry for entry in plugins if isinstance(entry, dict) and entry.get("name") == name]
+        if not isinstance(version, str) or not version:
+            self.add("ERROR", plugin_path, 0, "plugin-version", "plugin.json version must be a non-empty string")
         if len(entries) != 1:
             self.add("ERROR", market_path, 0, "plugin-version", f"marketplace.json must list {name!r} exactly once")
         elif entries[0].get("version") != version:

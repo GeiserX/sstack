@@ -177,6 +177,20 @@ printf '%s\\n' "validated"
 
         self.assertEqual(["plugin-version"], [finding.code for finding in self.repo_findings(repo)])
 
+    def test_a_numeric_plugin_version_is_rejected(self) -> None:
+        repo = self.make_repo(readme_skills=["alpha", "beta"], plugin_version=1, market_version=1)
+
+        self.assertEqual(["plugin-version"], [finding.code for finding in self.repo_findings(repo)])
+
+    def test_a_marketplace_without_a_plugins_list_is_a_finding(self) -> None:
+        repo = self.make_repo(readme_skills=["alpha", "beta"], plugin_version="1.0.0", market_version="1.0.0")
+        (repo / ".claude-plugin" / "marketplace.json").write_text(
+            json.dumps({"name": "repo", "plugins": None}), encoding="utf-8"
+        )
+
+        codes = [finding.code for finding in self.repo_findings(repo)]
+        self.assertEqual(["plugin-version", "plugin-version"], codes)
+
     def test_plugin_skills_path_must_be_the_skills_folder(self) -> None:
         repo = self.make_repo(readme_skills=["alpha", "beta"], plugin_version="1.0.0", market_version="1.0.0")
         plugin = repo / ".claude-plugin" / "plugin.json"
