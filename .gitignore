@@ -12,3 +12,4 @@ site/
 .beads/issues.jsonl
 .beads/interactions.jsonl
 .beads/events.jsonl
+.beads/config.yaml
