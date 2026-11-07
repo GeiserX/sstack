@@ -32,8 +32,16 @@ The goal is this skill's arguments. If none were given, the goal is whatever the
 says is unfinished.
 
 Stay in `sergio-loop` for as long as there is work left. Then, once you have **checked that nothing is
-pending**, load the `refine-loop` skill (again a real load, not a description of it) and step theta down
-toward 0, one pass per level.
+pending**, load the `refine-loop` skill (again a real load, not a description of it) and step theta down,
+one segment per level, passing the goal as the refinement intent every time:
+
+1. `refine-loop theta=2.0 <goal>` starts the first segment.
+2. When that segment reaches a terminal outcome, `refine-loop --continue theta=1.0 <goal>` opens the next.
+3. Then `--continue theta=0.5 <goal>`, then `--continue theta=0.25 <goal>`. Stop after the `0.25`
+   segment: refine-loop rejects `theta <= 0`, so the schedule ends at that positive floor.
+
+If no goal was given, use one sentence naming what the repository's state said was unfinished as the
+intent, so refine-loop never stops to ask for one.
 
 "Nothing is pending" is a check, not a feeling. It holds only when all of these are true, each with
 evidence recorded:
