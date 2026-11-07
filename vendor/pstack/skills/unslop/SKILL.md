@@ -32,8 +32,8 @@ Unslop cuts words. It never cuts links. Every other rule here is about removing 
 
 - **Never remove a link.** Not from prose, not from a heading, not from a bullet, not from a table cell. If a sentence has to be rewritten, carry the link into the rewrite. A link is what makes a claim checkable, so dropping it costs the reader more than any tell you removed.
 - **Never downgrade a link to bare text.** A link labelled `the runner policy` pointing at `docs/ci-runners.md` must not come back as the words "the runner policy" with nothing behind them. Reword the label freely, keep the target.
-- **Add a link when the text already names something linkable.** If the prose mentions another doc, a file, a script, an issue, or a PR that the reader can reach, make it clickable. A bare mention of `docs/INDEX.md` becomes a link to `docs/INDEX.md`. "the mac mini onboarding guide" becomes a link to that file. "issue 1585" becomes a link to it. Nobody should have to go hunting for a thing the doc just named.
-- **Prefer relative link targets inside a repo**, so they survive a branch, a fork, and a private mirror. Point at `../neutral-hardware/docs/mac-mini-onboarding.md`, not a github.com URL pinned to one branch.
+- **Add a link when the text already names something linkable.** If the prose mentions another doc, a file, a script, an issue, or a PR that the reader can reach, make it clickable. A bare mention of `docs/INDEX.md` becomes a link to `docs/INDEX.md`. "the setup guide" becomes a link to that file. "issue 1585" becomes a link to it. Nobody should have to go hunting for a thing the doc just named.
+- **Prefer relative link targets inside a repo**, so they survive a branch, a fork, and a private mirror. Point at `../other-repo/docs/setup.md`, not a github.com URL pinned to one branch.
 - **Only link what you verified exists.** Check the path, the issue number, the anchor. A confident link to a file that isn't there is worse than plain text, because it looks checked.
 - **Link once, at first mention.** Do not turn every noun into a link. Repeating the same link five times in a section is its own kind of noise.
 

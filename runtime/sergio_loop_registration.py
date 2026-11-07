@@ -30,7 +30,7 @@ from typing import Any
 # Overridable so tests never write the operator's real accounts — the same reason `pointer_path`
 # honours the runtime-directory override. A test that repairs live configuration is not a test.
 ACCOUNTS_DIRECTORY_ENV = "SERGIO_LOOP_ACCOUNTS_DIR"
-DEFAULT_ACCOUNTS_DIRECTORY = "~/.config/neutral-driver/accounts"
+DEFAULT_ACCOUNTS_DIRECTORY = "~/.config/sstack/accounts"
 
 HOOK_MARKER = "sergio-loop-stop-hook"
 MAX_SETTINGS_BYTES = 1024 * 1024
@@ -49,16 +49,20 @@ def stop_entry() -> dict[str, Any]:
     directory rather than hardcoded, so the same code is testable off this machine.
     """
     hooks_directory = Path.home() / ".claude" / "hooks"
-    return {
-        "hooks": [
-            {"type": "command", "command": f"{hooks_directory / 'notify-mac.sh'} stop"},
-            {
-                "type": "command",
-                "command": f"python3 {hooks_directory / 'sergio-loop-stop-hook.py'}",
-                "timeout": 10,
-            },
-        ]
-    }
+    hooks: list[dict[str, Any]] = []
+    # An optional stop notifier the installer does not ship: registered only where it exists, so an
+    # account never gets a command that fails on every stop.
+    notifier = hooks_directory / "notify-mac.sh"
+    if notifier.is_file():
+        hooks.append({"type": "command", "command": f"{notifier} stop"})
+    hooks.append(
+        {
+            "type": "command",
+            "command": f"python3 {hooks_directory / 'sergio-loop-stop-hook.py'}",
+            "timeout": 10,
+        }
+    )
+    return {"hooks": hooks}
 
 
 def has_hook(settings: object) -> bool:
