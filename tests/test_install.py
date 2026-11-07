@@ -58,6 +58,21 @@ class InstallTests(unittest.TestCase):
         self.assertEqual(1, len(backups))
         self.assertEqual("mine\n", backups[0].read_text(encoding="utf-8"))
 
+    def test_a_repeated_name_keeps_the_backup(self) -> None:
+        installed = self.home / ".claude" / "skills"
+        installed.mkdir(parents=True)
+        mine = self.home / "mine"
+        mine.mkdir()
+        (installed / "eli5").symlink_to(mine)
+
+        result = self.run_install("eli5", "eli5")
+
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual((ROOT / "skills" / "eli5").resolve(), (installed / "eli5").resolve())
+        backups = list((self.home / ".claude" / "skills-backups").glob("*/eli5"))
+        self.assertEqual(1, len(backups))
+        self.assertEqual(mine.resolve(), backups[0].resolve())
+
     def test_codex_links_into_codex_skills(self) -> None:
         result = self.run_install("--codex", "file-pr")
 

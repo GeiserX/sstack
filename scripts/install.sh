@@ -67,11 +67,15 @@ if ((${#skills[@]} == 0)); then
   done
 fi
 
+# A repeated name would move the fresh link onto the backup of the first pass and lose it.
+seen=" "
 for skill in "${skills[@]}"; do
   if [[ "$skill" == */* || ! -f "$source_root/$skill/SKILL.md" ]]; then
     echo "no such skill: $skill" >&2
     exit 1
   fi
+  [[ "$seen" == *" $skill "* ]] && continue
+  seen+="$skill "
   link_into "$install_root/$skill" "$backup_root" "$source_root/$skill"
 done
 
