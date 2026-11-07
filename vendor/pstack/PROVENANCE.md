@@ -9,7 +9,7 @@ This directory vendors the pstack skill set for Claude Code. It is a snapshot, n
 | 48 skills + `agents/poteto-agent.md` | [michael-denyer/pstack-claude](https://github.com/michael-denyer/pstack-claude) (Claude Code port of [cursor/plugins](https://github.com/cursor/plugins) `pstack/` + 7 `cursor-team-kit` skills) | `8bf501c1a9f6777f63f8d9a705c2b3f54a5b2eac` (2026-08-08, port v0.9.10, upstream v0.11.3) | MIT — see `LICENSE` (Lauren Tan), `LICENSE-cursor-team-kit` (Cursor), `NOTICE-port.md` |
 | 4 skills the port does not carry yet: `bro`, `no-comments`, `swarm`, `technical-writing` + `agents/comment-sicko.md` | [cursor/plugins](https://github.com/cursor/plugins) `pstack/` | `46125561306434d8a1d7745d540d8932ab0cd2a2` (2026-08-20) | MIT — `LICENSE` |
 
-The port was verified against real upstream at the attributed commits before vendoring: 7 skills byte-identical, the rest translation-only (Cursor primitives → Claude Code equivalents), zero injected content, and the four shipped scripts read line by line. `unslop/SKILL.md` is byte-identical to upstream.
+The port was verified against real upstream at the attributed commits before vendoring: 7 skills byte-identical, the rest translation-only (Cursor primitives → Claude Code equivalents), zero injected content, and the four shipped scripts read line by line.
 
 ## What is deliberately NOT here
 
@@ -19,6 +19,7 @@ The port was verified against real upstream at the attributed commits before ven
 
 1. `bro`, `no-comments`, `swarm`, `technical-writing`: ported here directly from upstream. `bro` and `technical-writing` are verbatim. `swarm` and `no-comments` carry the port's standard substitutions (`Task`/`generalPurpose` → `Agent`/`general-purpose`, `~/.cursor/rules/pstack-models.mdc` → `~/.claude/pstack-models.md`, `grok-4.6-fast-xhigh` → `claude-sonnet-5`, `environment: "cloud"`/`cloud_base_branch` → `isolation: "remote"`/`"worktree"` platform notes).
 2. `how` and `why` gained `disable-model-invocation: true`. Both fan out heavyweight explorer/investigator panels; the house rule is that questions are read-only and cheap, so they run only when invoked by name (`/how`, `/why`).
+3. `unslop` keeps links: the description says so, the process gained a link pass (step 4) and a link count in the self-audit (step 5), and a new `## Links` section says never remove or downgrade a link, add one where the text names something linkable, prefer relative targets, link only what exists, link once. Pattern 22 also names the quieter forms of sycophancy ("you're right", "fair point", "good catch").
 
 ## House rules for this set
 
