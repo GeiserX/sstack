@@ -173,5 +173,26 @@ class RegistrationTests(unittest.TestCase):
         )
 
 
+    def test_the_entry_holds_only_the_stop_hook_unless_a_notifier_is_installed(self) -> None:
+        previous_home = os.environ.get("HOME")
+        os.environ["HOME"] = os.fspath(self.accounts)
+        try:
+            commands = [hook["command"] for hook in registration.stop_entry()["hooks"]]
+            self.assertEqual(1, len(commands))
+            self.assertIn("sergio-loop-stop-hook.py", commands[0])
+
+            hooks = self.accounts / ".claude" / "hooks"
+            hooks.mkdir(parents=True)
+            (hooks / "notify-mac.sh").write_text("#!/bin/sh\n", encoding="utf-8")
+            commands = [hook["command"] for hook in registration.stop_entry()["hooks"]]
+            self.assertEqual(2, len(commands))
+            self.assertIn("sergio-loop-stop-hook.py", commands[-1])
+        finally:
+            if previous_home is None:
+                os.environ.pop("HOME", None)
+            else:
+                os.environ["HOME"] = previous_home
+
+
 if __name__ == "__main__":
     unittest.main()
