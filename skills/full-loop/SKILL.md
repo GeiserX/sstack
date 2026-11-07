@@ -38,7 +38,10 @@ evidence recorded:
 - every request this segment satisfied has been reported back, with its link actually delivered;
 - the goal's acceptance criteria passed fresh verification and an independent review.
 
-If any of those fails, there is still work left, so stay in `sergio-loop`.
+If any of those fails, there is still work left, so stay in `sergio-loop`. When its run has already
+ended in `SUCCESS`, it does no more work on its own: start the next segment with
+`sergio-loop --continue <new goal>`, where the new goal names the failing check's work (for example the
+ready tracker items, or the open deferred questions).
 
 Do not treat a blocker as final until you have said whether it is impossible or merely hard. Hard is
 yours to solve. When something truly needs the owner, say in plain terms what you need and what each
