@@ -56,7 +56,8 @@ endpoint (`/upload/policies/assets`) answers 422.
    headless. The release editor has a plain `textarea[name="release[body]"]` and an `input[type=file]`.
 5. Call `DOM.setFileInputFiles` with every file on that `input[type=file]`, then poll the textarea until
    the `user-attachments/assets/<uuid>` URLs appear. The upload happens at once. Do not save or submit the
-   form, so nothing is published.
+   form: the release stays unchanged, but the file is already uploaded, and in a public repository its URL
+   works without signing in. Do not use this for a video that must stay private until a later date.
 6. Put each bare URL on its own line in the doc, then commit and push.
 
 There is no bundled uploader; the steps above are the recipe.
@@ -66,11 +67,11 @@ There is no bundled uploader; the steps above are the recipe.
 Fetch the rendered page with the same session and count the players:
 
 ```bash
-curl -s -b "$COOKIE_JAR" "https://github.com/$OWNER/$REPO/blob/$BRANCH/$DOC_PATH" | grep -c '<video'
+curl -s -b "$COOKIE_JAR" "https://github.com/$OWNER/$REPO/blob/$BRANCH/$DOC_PATH" | grep -o '<video' | wc -l
 ```
 
 The count must equal the number of videos. Then delete the cookie export with `shred -u` (or your
-platform's secure delete): it is a live session.
+platform's secure delete) and remove the temporary `--user-data-dir`: both hold a live session.
 
 ## Alternative
 
