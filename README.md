@@ -77,6 +77,7 @@ Pick one route for Claude Code. With both the plugin and the symlinks, every ski
 | [`investigate`](skills/investigate/SKILL.md) | `/investigate <bug>` | Independent hypothesis agents take a failure from reproduction to root cause, and fix it only when asked. |
 | [`research`](skills/research/SKILL.md) | `/research <question>` | Parallel specialists gather evidence from the code, its history and primary sources, then a ranked, cited answer. |
 | [`review-code`](skills/review-code/SKILL.md) | `/review-code` | Audits a whole codebase in bounded waves and publishes every verified finding by severity. |
+| [`tidy-repo`](skills/tidy-repo/SKILL.md) | `/tidy-repo` | Sweeps an established repo without changing what it does: audit, delete, restructure, refresh the living docs, and leave guards that keep it clean. |
 | [`review-pr`](skills/review-pr/SKILL.md) | "review PR 42" | Three review lenses, one fixer and one adversarial verifier per pull request, then merge or close. |
 | [`implement`](skills/implement/SKILL.md) | `/implement <change>` | The smallest complete change, with independent parts split across agents that own separate files. |
 
