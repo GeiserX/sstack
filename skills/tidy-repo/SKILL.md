@@ -78,7 +78,7 @@ Cut the work into **units**. A unit is one theme, small enough to review in one 
 
 Sort findings that change the contract into two groups:
 
-- **Clear bugs.** Each gets its own unit with a regression test. The PR title names it a bug fix.
+- **Clear bugs.** These are the only deliberate contract changes the sweep makes. Each gets its own unit, after the restructure units have landed. In that unit, change the behaviour-recording test from step 2.3 to the correct expectation, add a regression test, record the change in the contract inventory, and name it a bug fix in the PR title. Every other unit leaves the contract exactly as the inventory states it.
 - **Decisions.** These need a product or design choice. They go to the report, unimplemented.
 
 Done when every verified finding belongs to exactly one unit or the decisions list.
@@ -117,13 +117,15 @@ List every Markdown file, docstring set, CLI help text and example in the repo. 
 - **Living:** it describes the repo as it is now. README, CONTRIBUTING, `AGENTS.md` and `CLAUDE.md`, guides under `docs/`, API references, CLI help, examples, the changelog's unreleased section.
 - **Historical:** it records a moment. Audits, incident reports, research notes, design records, dated plans, released changelog entries.
 
-Run `docs-loop --apply --open-prs` over the repo. Check each living doc against the code after step 5, not before. Run every command it shows, confirm every path and link resolves, and rewrite what changed. Make readability fixes in the same pass. Historical docs keep their text. Only their broken links get repaired. A doc you cannot classify counts as historical and goes in the report.
+Run `docs-loop` over the repo in dry-run mode, and use its findings as the doc work list. Check each living doc against the code after step 5, not before. Confirm every path and link resolves. Run the commands a doc shows only when they only build, test, lint or read. Check any command that deploys, deletes, publishes or reaches outside the repo by reading it against the code instead of running it. Rewrite what changed, and fix readability in the same pass. Historical docs keep their text; only their broken links get repaired. A doc you cannot classify counts as historical and goes in the report.
 
 Update the repo's agent instructions (`AGENTS.md`, `CLAUDE.md`) with the map from step 1 as it now stands, the real build and test commands, and the conventions the sweep settled on. The next agent then keeps the new shape without having to rediscover it.
 
-Run `unslop` over every doc you rewrote.
+Run `unslop` over every doc you rewrote if it is installed. Otherwise reread each one and cut filler, repeated points and vague wording.
 
-Done when every living doc matches the code on main and every unclassified doc is in the report.
+Make all of these edits before you open the PR. Then land the docs PR through the repo's gate, like any other unit.
+
+Done when the docs PR has merged, every living doc on main matches the code, and every unclassified doc is in the report.
 
 ### 8. Report
 
