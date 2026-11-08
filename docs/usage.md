@@ -115,7 +115,7 @@ agents on a modest one, 4-7 on a normal one and 8-12 or more on a broad or risky
 spawn other agents. The fan-out runs on your default model and the checking of findings on your
 strongest one.
 
-Four of them run only when you call them by name: `/<name>` in Claude Code, `$<name>` in Codex.
+Five of them run only when you call them by name: `/<name>` in Claude Code, `$<name>` in Codex.
 `review-pr` can also start when you ask the agent to review a pull request.
 
 - `investigate` reproduces a failure, has competing hypotheses tested against each other, and names a
@@ -128,6 +128,11 @@ Four of them run only when you call them by name: `/<name>` in Claude Code, `$<n
 - `review-code` audits a repository in bounded waves, publishes every verified finding ranked by
   severity, and repairs only what is within scope and worth the churn. It hands behavior changes to
   `investigate` or the [goal loop](#goal-loop-sergio-loop) instead.
+- `tidy-repo` sweeps an established repository without changing what it does. It records the test
+  baseline and an inventory of everything callers can observe, audits through fifteen lenses until two
+  rounds find nothing new, then lands small PRs in order: delete, merge duplicates, restructure, polish.
+  Each class of problem it removes gets a guard proven to fail, and it runs `docs-loop` over the living
+  docs once the code has settled.
 - `research` answers a question from the code, its history and primary sources, with a claim, a
   source and a confidence level for each finding, then ranks the options.
 - `implement` makes the smallest complete change, gives each parallel writer its own files, then
@@ -137,6 +142,7 @@ Four of them run only when you call them by name: `/<name>` in Claude Code, `$<n
 /investigate Checkout returns 500 since yesterday's deploy
 /review-pr 42
 /review-code
+/tidy-repo
 /research How does connection pooling work in this app?
 /implement Add webhook retries with exponential backoff
 ```

@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- New skill: `tidy-repo` sweeps an established repo without changing what it does, refreshes the living docs and leaves guards that keep it clean.
+
 ## 1.1.0 (2026-11-07)
 
 - Renamed from `agent-skills` to `sstack` (sergio stack). GitHub redirects the old repository URLs; the documentation site moved to https://geiserx.github.io/sstack/.

@@ -65,6 +65,7 @@ hide:
 | [`investigate`](usage.md#parallel-skills) | Reproduces a failure and tests competing hypotheses until one root cause holds. |
 | [`review-pr`](usage.md#parallel-skills) | Reviews pull requests in one Workflow run (right problem, robust, usable by us), comments the plan, pushes the fixes, then merges or closes. |
 | [`review-code`](usage.md#parallel-skills) | Audits a repository in waves and publishes every verified finding, ranked by severity. |
+| [`tidy-repo`](usage.md#parallel-skills) | Sweeps an established repository without changing what it does, then refreshes its living docs and leaves guards that keep it clean. |
 | [`research`](usage.md#parallel-skills) | Answers a question from the code, its history and primary sources, with a source for each claim. |
 | [`implement`](usage.md#parallel-skills) | Makes the smallest complete change, giving each parallel writer its own files. |
 
