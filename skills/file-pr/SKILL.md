@@ -64,11 +64,13 @@ The preference now applies to every new thread.
 
 1. When the branch has changes not yet on the remote, stage exact paths, commit and push. A title or description
    rewrite alone needs no commit.
-2. Write the body to a temporary file and pass it with `--body-file`, so the shell does not mangle it.
-3. Open a ready PR, not a draft, so required checks and review bots run: `gh pr create --title "<title>" --body-file
+2. Run the title and the body through the `readable` skill. Without it, reread both and cut filler, repeated points
+   and vague wording.
+3. Write the body to a temporary file and pass it with `--body-file`, so the shell does not mangle it.
+4. Open a ready PR, not a draft, so required checks and review bots run: `gh pr create --title "<title>" --body-file
    <file>`. An existing PR is updated with `gh pr edit <n> --title "<title>" --body-file <file>`.
-4. Never request reviewers on GitHub (`--reviewer`, the Reviewers box, a re-request after a fix) unless the
+5. Never request reviewers on GitHub (`--reviewer`, the Reviewers box, a re-request after a fix) unless the
    repository's own rules ask for it.
-5. Report the PR URL. If asked to see it through, follow the checks (`gh pr checks <n> --watch`) and fix what fails.
+6. Report the PR URL. If asked to see it through, follow the checks (`gh pr checks <n> --watch`) and fix what fails.
 
 Done when the PR exists, its title and body follow this file, and its URL is in the reply.

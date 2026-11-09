@@ -101,6 +101,7 @@ Pick one route for Claude Code. With both the plugin and the symlinks, every ski
 
 | Skill | Say | What it does |
 |---|---|---|
+| [`readable`](skills/readable/SKILL.md) | "make this readable" | Cuts AI writing tropes and rebuilds the sentences at 80% of ASD-STE100, with every fact and link kept. |
 | [`verified-reply`](skills/verified-reply/SKILL.md) | "draft a reply to this" | A reply you send as yourself, every claim checked against a live source first. |
 | [`eli5`](skills/eli5/SKILL.md) | "eli5" | Explains work or a system in plain words with real names. |
 | [`help-decide`](skills/help-decide/SKILL.md) | "help me decide" | Lays a decision out so one word answers it. |
@@ -117,6 +118,7 @@ None of them treats a stored goal as permission to merge, publish or deploy.
 
 - `full-loop` runs `sergio-loop` to done, then `refine-loop`.
 - `review-code` hands any finding that would change behaviour to `sergio-loop` or `investigate` instead of fixing it.
+- `file-pr`, `verified-reply`, `review-pr`, `kb-review`, `docs-loop`, `tidy-repo`, `grow-my-repo` and `submit-awesome` run their text through `readable` before it goes out.
 - `file-pr` uses the `github-video-embed` recipe when a UI change needs a recording in the pull request.
 - `docs-loop`, `refine-loop`, `sergio-loop` and `full-loop` share the loop contract in `shared/loop-contract.md`; the validator checks that every loop carries the same copy.
 

@@ -23,7 +23,8 @@ post only on their approval of the exact text.
 4. **Draft in the user's voice.** Two to four lines by default, in the register of the thread. Answer what was asked
    and stop. One number per claim, plain words, no headings or lists in a chat message, hedges only where the
    evidence hedges. When a line corrects the reader, give the one check they can run to see it. Start sentences with
-   the point and end on substance. Done when every sentence carries information.
+   the point and end on substance. Then run the draft through the `readable` skill at its light level, when it is installed. Done when every
+   sentence carries information.
 5. **Hand it over.** The reply, then separately one line per claim with its source, so the user can defend each line.
    Flag what you cut or softened. The evidence never goes into the message itself. Done when the user has both.
 6. **Post on approval only.** Post the exact text the user approved, through the tool for that surface. If they

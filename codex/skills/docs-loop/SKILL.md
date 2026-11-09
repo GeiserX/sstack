@@ -168,7 +168,8 @@ product intent.
   after a no-change audit. A dry-run report is not a PR and must not imply that tracked or state changes
   were applied.
 - **APPLY:** patch only supported claims, one documentation file at a time, in the isolated worktree. Keep
-  changes surgical and preserve existing voice and structure. Stage only the exact changed documentation
+  changes surgical and preserve existing voice and structure. Write each new or changed sentence by the
+  `readable` skill when it is installed. Stage only the exact changed documentation
   paths in the isolated worktree so the required staged-content scanners can inspect them. Do not commit;
   the preserved staged worktree is the deliverable.
 - **OPEN-PRS:** perform APPLY, then stage only the exact changed documentation paths. Run the secret gates,

@@ -102,6 +102,8 @@ Each item opens places; the sources are in `places.md` under "What to do on the 
 
 ## Honesty and conduct
 
+- Every text that goes to a place (a description, a form field, a PR body) passes through the `readable` skill
+  first. Without it, reread the text and cut filler, repeated points and vague wording.
 - Nothing that goes stale. Every description handed to a place (a list entry, a directory blurb, a catalogue field)
   says what the project is and does, never a figure that moves: no counts, versions, licences, dates or "new",
   unless the place's format requires the field. A moving fact is a future fix PR at each place that carries it, and
