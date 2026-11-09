@@ -141,7 +141,7 @@ Draft them, show them, and post nothing until the user approves the exact text. 
 - Never name, cite or rebut an automated reviewer. Verify its claims yourself and speak from your own evidence, unless the author raised it first.
 - Do not advise on the author's ticket or its checklist. With an approval, remaining points are "for next time", not asks.
 - No closing service phrases and no "for future readers" justifications. End on substance.
-- Run each comment through the `readable` skill at its light level before you show it.
+- Run each comment through the `readable` skill at its light level before you show it. Without it, reread the text and cut filler, repeated points and vague wording.
 - Prefer an inline comment on the exact line inside the diff. After an approved post, read it back and confirm it rendered, with code in backticks and links clickable.
 
 ## Learning from the answer key

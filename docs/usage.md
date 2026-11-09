@@ -222,7 +222,7 @@ your behalf.
 the facts and links first. Then it cuts the AI writing tropes and rewrites each point with the sentence rules of
 ASD-STE100 (Simplified Technical English) softened to 80%: one idea in each sentence, short sentences, active voice,
 simple tenses and plain words. Chat messages get a light level, and procedures get a strict level. The rewrite keeps
-every fact, number, link and degree of certainty.
+every fact, number, link and degree of certainty. In a reply it can cut background that the reader already has.
 
 The skills that write for other people (`file-pr`, `verified-reply`, `review-pr`, `kb-review`, `docs-loop`,
 `tidy-repo`, `grow-my-repo` and `submit-awesome`) run their text through it before the text goes out.

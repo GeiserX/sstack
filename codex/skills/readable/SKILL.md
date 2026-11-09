@@ -29,8 +29,8 @@ Edit text so that its reader understands it on the first read, and so that it so
 3. Mark the tropes. Read the whole text once and mark every match in [Tropes](#tropes), at the scale of the sentence, the paragraph and the whole text. Done when every mark has a replacement or a deletion.
 4. Rewrite. Restate each point by the [Sentence rules](#sentence-rules) at the chosen level. Rewrite the point, never patch it phrase by phrase. If a sentence stays awkward, rewrite the paragraph around its main point. Done when every sentence adds something that the reader does not already have.
 5. Do the link pass in [Links](#links). Done when the count of links is equal to or higher than the count in the inventory.
-6. Check the result against the inventory and [Fidelity](#fidelity). An added fact is an error. A lost fact is an error, unless a row in [Tropes](#tropes) told you to cut it. Then search again for the five tropes that survive a rewrite most often: contrast framing, closers, triads, dashes and bold labels. Short sentences make new closers and fragments. Done when a fresh read finds no item missing and no trope.
-7. Return the text. When another task called this skill (a pull request, a commit message, a doc), return only the final text. When the user gave you the text, add a short list of what changed, of each fact that a trope row cut, and of anything that the source leaves unclear or contradicts.
+6. Check the result against the inventory and [Fidelity](#fidelity). An added fact is an error, and a lost fact is an error. The rows in [Tropes](#tropes) cut dressing and repeats, never a claim: when a cut would remove a claim, keep the claim in plain form. The one exception is the "wrong reader" row, which cuts background that the reader already has. Then search again for the five tropes that survive a rewrite most often: contrast framing, closers, triads, dashes and bold labels. Short sentences make new closers and fragments. Done when a fresh read finds no item missing and no trope.
+7. Return the text. When another task called this skill (a pull request, a commit message, a doc), return only the final text. When the user gave you the text, add a short list of what changed, of any background that the "wrong reader" row cut, and of anything that the source leaves unclear or contradicts.
 
 ## Levels
 
@@ -113,7 +113,7 @@ The fact below the inflation is usually sound. Keep the fact.
 | "-ing" riders | A fact followed by "highlighting", "ensuring", "reflecting", "underscoring", "fostering", "contributing to" | The fact. The rider stays only when the source supports its claim |
 | Sales language | groundbreaking, stunning, world-class, cutting-edge, best-in-class, nestled, renowned, all-in-one, "unlocks", "elevates" | What the thing is and what it does |
 | Feeling for mechanism | A phrase that says how a thing feels ("SQL you can read", "the database stays close") | What it does, or a number |
-| Borrowed authority | "experts argue", "industry reports", "observers have noted", "several publications", "famously", "a classic", "as we all know", a list of outlets, a quick list of famous companies as proof | Who said what, when the source names them. Otherwise cut the claim. Never invent a source |
+| Borrowed authority | "experts argue", "industry reports", "observers have noted", "several publications", "famously", "a classic", "as we all know", a list of outlets, a quick list of famous companies as proof | Who said what, when the source names them. Otherwise the claim alone, without the authority. Never invent a source |
 | Verb dodge | "serves as", "stands as", "represents", "marks", "boasts", "features", "offers" | "is", "are", "has" |
 | Vague relation | "associated with", "linked to", "tied to", "connected to" | The relation that the source gives. If the source gives none, keep the vague words |
 | Invented labels | A coined compound on "paradox", "trap", "creep", "divide", "vacuum" or "inversion" ("the supervision paradox") used as an established term | The argument that the label skips |
@@ -162,7 +162,7 @@ Every other rule here removes words. These rules keep and add links, because a l
 
 Short sentences tempt the writer to drop qualifiers, and the trope pass tempts the writer to improve the content. Strict rewrites lose the most facts.
 
-- Keep every fact. If a fact does not fit the style, change the sentence.
+- Keep every fact. If a fact does not fit the style, change the sentence. A trope row removes the dressing around a claim, and the claim stays.
 - Keep certainty at its strength. "may", "probably", "in most cases" and "we think" stay in some form.
 - Keep numbers, names, dates, quotes and identifiers exact. "40+" stays "40+".
 - Add no fact, example, reason, quote, source or warning.

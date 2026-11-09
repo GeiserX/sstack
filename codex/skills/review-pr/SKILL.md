@@ -53,7 +53,7 @@ Lens schema, required fields: `verdict` (`fix` | `merge-as-is` | `close` | `rede
 
 **Fixer**, one `agent()` after the lenses (a barrier is right here: it needs all three reports). It drops findings it cannot reproduce or that fall outside the PR's intent, merges duplicates by root cause, takes a better way from a lens when it fits inside the PR, and decides. Then, in this order:
 
-1. Posts one PR comment: what we will change and why, what we cut or leave and why. Plain words, run through the `readable` skill, with file:line links pinned to the head SHA.
+1. Posts one PR comment: what we will change and why, what we cut or leave and why. Plain words, run through the `readable` skill when it is installed, with file:line links pinned to the head SHA.
 2. Commits the fixes, each with a test that fails on the PR's original head, and pushes. A fix with nothing to execute (docs, config, a skill) carries the check that shows it fixed instead: a validator run, a rendered page, a link check.
 
 On a public repo, it scans the comment text, each commit message and the diff for private data before posting or pushing, the same scan the verifier runs. Nothing private may reach a public write, even once.
