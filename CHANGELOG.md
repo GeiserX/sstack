@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- New skill: `readable` makes text written for another person clear on the first read. It cuts AI writing tropes, rebuilds the sentences at 80% of ASD-STE100 and keeps every fact and link. The skills that write for other people now run their text through it.
 - New skill: `tidy-repo` sweeps an established repo without changing what it does, refreshes the living docs and leaves guards that keep it clean.
 
 ## 1.1.0 (2026-11-07)

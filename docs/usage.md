@@ -216,6 +216,21 @@ your behalf.
 /verified-reply <the message to answer>
 ```
 
+## Readable text
+
+[`readable`](https://github.com/GeiserX/sstack/blob/main/skills/readable/SKILL.md) edits any text written for another person so that the reader understands it on the first read. It lists
+the facts and links first. Then it cuts the AI writing tropes and rewrites each point with the sentence rules of
+ASD-STE100 (Simplified Technical English) softened to 80%: one idea in each sentence, short sentences, active voice,
+simple tenses and plain words. Chat messages get a light level, and procedures get a strict level. The rewrite keeps
+every fact, number, link and degree of certainty.
+
+The skills that write for other people (`file-pr`, `verified-reply`, `review-pr`, `kb-review`, `docs-loop`,
+`tidy-repo`, `grow-my-repo` and `submit-awesome`) run their text through it before the text goes out.
+
+```text
+/readable <the text, or the path of the file>
+```
+
 ## Reviving cut-off work
 
 [`revive`](https://github.com/GeiserX/sstack/blob/main/skills/revive/SKILL.md) runs after a usage limit, a crash, a restart or a compaction. It reads the clock and the world (the

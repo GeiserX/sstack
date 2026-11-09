@@ -89,6 +89,7 @@ hide:
 
 | Skill | What it does |
 |---|---|
+| [`readable`](usage.md#readable-text) | Cuts AI writing tropes from any text and rebuilds its sentences at 80% of ASD-STE100, with every fact and link kept. |
 | [`verified-reply`](usage.md#pull-requests-and-replies) | Drafts a reply you send as yourself, with every claim checked against a live source. |
 | [`eli5`](usage.md#explaining-and-deciding) | Explains work, a system or a situation in plain words with real names. |
 | [`help-decide`](usage.md#explaining-and-deciding) | Lays a decision out so one word answers it: recommendation and pros and cons first. |

@@ -135,7 +135,7 @@ Run `docs-loop` over the repo in dry-run mode, and use its findings as the doc w
 
 Update the repo's agent instructions (`AGENTS.md`, `CLAUDE.md`) with the map from step 1 as it now stands, the real build and test commands, and the conventions the sweep settled on. The next agent then keeps the new shape without having to rediscover it.
 
-Run `unslop` over every doc you rewrote if it is installed. Otherwise reread each one and cut filler, repeated points and vague wording.
+Run `readable` over every doc you rewrote if it is installed. Otherwise reread each one and cut filler, repeated points and vague wording.
 
 Make all of these edits before you open the PR. Then land the docs PR through the repo's gate, like any other unit.
 
