@@ -14,7 +14,7 @@ Edit text so that its reader understands it on the first read, and so that it so
 3. Mark the tropes. Read the whole text once and mark every match in [Tropes](#tropes), at the scale of the sentence, the paragraph and the whole text. Done when every mark has a replacement or a deletion.
 4. Rewrite. Restate each point by the [Sentence rules](#sentence-rules) at the chosen level. Rewrite the point, never patch it phrase by phrase. If a sentence stays awkward, rewrite the paragraph around its main point. Done when every sentence adds something that the reader does not already have.
 5. Do the link pass in [Links](#links). Done when the count of links is equal to or higher than the count in the inventory.
-6. Check the result against the inventory and [Fidelity](#fidelity). An added fact is an error, and a lost fact is an error. The rows in [Tropes](#tropes) cut dressing and repeats, never a claim: when a cut would remove a claim, keep the claim in plain form. The one exception is the "wrong reader" row, which cuts background that the reader already has. Then search again for the five tropes that survive a rewrite most often: contrast framing, closers, triads, dashes and bold labels. Short sentences make new closers and fragments. Done when a fresh read finds no item missing and no trope.
+6. Check the result against the inventory and [Fidelity](#fidelity). An added fact is an error, and a lost fact is an error. The rows in [Tropes](#tropes) cut dressing and repeats, never a claim: when a cut would remove a claim, keep the claim in plain form. The one exception is the "wrong reader" row, which cuts background that the reader already has. Then search again for the five tropes that survive a rewrite most often: contrast framing, closers, triads, dashes and bold labels. Short sentences make new closers and fragments. For English text, also run the checker in [Checker](#checker) and fix what it finds. Done when a fresh read finds no item missing and no trope, and you can give a reason for each finding that the checker still prints.
 7. Return the text. When another task called this skill (a pull request, a commit message, a doc), return only the final text. When the user gave you the text, add a short list of what changed, of any background that the "wrong reader" row cut, and of anything that the source leaves unclear or contradicts.
 
 ## Levels
@@ -153,6 +153,22 @@ Short sentences tempt the writer to drop qualifiers, and the trope pass tempts t
 - Add no fact, example, reason, quote, source or warning.
 - Keep each word as exact as the source. "Verify the backup" becomes "make sure that the backup is complete" only if the source says what "verify" means.
 - If the source contradicts itself, keep both statements and say so in a note.
+
+## Checker
+
+`scripts/check.py`, in the folder of this file, flags what a script can decide about English text. It needs only Python 3.
+
+```bash
+python3 scripts/check.py --level default draft.md
+python3 scripts/check.py --level light - < reply.txt
+```
+
+- It prints `path:line: rule: match` for each finding. It exits with 1 when it finds something and with 0 when it finds nothing.
+- The rules are dashes, semicolons, typed characters, stock words, the fixed phrases of the tropes, Title Case and emoji headings, three or more bold labels, and long sentences.
+- The sentence limit is 25 words at `strict`, 28 at `default` and 30 at `light`.
+- It skips front matter, fenced code, inline code, URLs and block quotes. Text in double quotes is exempt from the word and phrase rules.
+- A finding in text that [Levels](#levels) tells you to leave unchanged stays. That is the one reason to keep a finding.
+- It cannot see composition: the answer in the last line, a point said twice, a missing fact. The fresh read in step 6 covers those.
 
 ## Sources
 
