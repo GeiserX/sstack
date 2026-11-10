@@ -99,7 +99,7 @@ class ReadableCheck(unittest.TestCase):
         self.assertIn("long-sentence", rules(text))
 
     def test_a_fence_line_with_text_does_not_close_the_block(self):
-        text = "````markdown\n```python\nx = 1  # robust — really; yes\n```\nstill code — robust\n````\n"
+        text = "```\n```python\nx = 1  # robust — really; yes\n```\n"
         self.assertEqual(check_module.check(text), [])
 
     def test_exit_codes(self):
