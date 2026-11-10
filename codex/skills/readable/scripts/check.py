@@ -64,7 +64,7 @@ PHRASES = {
     ),
 }
 
-FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
+FENCE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
 INLINE_CODE = re.compile(r"`[^`\n]*`")
 LINK_TARGET = re.compile(r"\]\([^)\s]*\)")
 URL = re.compile(r"(?:https?://|www\.)\S+")
@@ -98,7 +98,8 @@ def prose_lines(text: str):
     for number, line in enumerate(lines[start:], start + 1):
         mark = FENCE.match(line)
         if fence:
-            if mark and mark.group(1)[0] == fence[0] and len(mark.group(1)) >= len(fence):
+            # A closing fence has the opener's character, at least its length, and nothing after it.
+            if mark and mark.group(1)[0] == fence[0] and len(mark.group(1)) >= len(fence) and not mark.group(2).strip():
                 fence = None
             yield number, ""
             continue
@@ -192,7 +193,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     try:
         text = sys.stdin.read() if args.path == "-" else Path(args.path).read_text(encoding="utf-8")
-    except OSError as error:
+    except (OSError, UnicodeDecodeError) as error:
         print(f"check.py: {error}", file=sys.stderr)
         return 2
     findings = check(text, args.level)

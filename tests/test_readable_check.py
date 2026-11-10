@@ -98,6 +98,10 @@ class ReadableCheck(unittest.TestCase):
         text = "\n".join([" ".join(["word"] * 10)] * 3) + "."
         self.assertIn("long-sentence", rules(text))
 
+    def test_a_fence_line_with_text_does_not_close_the_block(self):
+        text = "````markdown\n```python\nx = 1  # robust — really; yes\n```\nstill code — robust\n````\n"
+        self.assertEqual(check_module.check(text), [])
+
     def test_exit_codes(self):
         import tempfile
 
@@ -111,6 +115,9 @@ class ReadableCheck(unittest.TestCase):
                 self.assertEqual(check_module.main([str(clean)]), 0)
                 self.assertEqual(check_module.main([str(dirty)]), 1)
                 self.assertEqual(check_module.main([str(Path(folder) / "missing.md")]), 2)
+                binary = Path(folder) / "binary.md"
+                binary.write_bytes(b"caf\xe9 \xff\xfe")
+                self.assertEqual(check_module.main([str(binary)]), 2)
             self.assertIn("dirty.md:3: dash:", out.getvalue())
 
 
