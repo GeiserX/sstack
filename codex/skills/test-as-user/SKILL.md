@@ -27,7 +27,7 @@ Every check names who is trying, what they want and where they are. The evidence
 
 With no argument, work on the repo that contains the current directory and the product it ships. A URL names a running instance to walk instead of a fresh install. With `--no-fix`, no fixer starts: stop after step 7 and write the report.
 
-Run it as a workflow. This skill is your opt-in to call the Workflow tool. Without one, run the same stages as parallel agents yourself, in the same order. The orchestrator has read the source, so it never plans, walks, scores or verifies itself. When no separate agent can take those stages, stop and report the run as unverified. Pin every agent to the strongest model the session allows. An unpinned agent inherits whatever the session runs on. Agents never spawn agents, so the orchestrator starts every walker. The agent that writes a change never approves it.
+Run it as a workflow. This skill is your opt-in to call the Workflow tool. Without the Workflow tool, start each stage as a separate agent, in the same order. The orchestrator has read the source, so it never plans, walks, scores or verifies itself. When no separate agent can take those stages, stop and report the run as unverified. Pin every agent to the strongest model the session allows. An unpinned agent inherits whatever the session runs on. Agents never spawn agents, so the orchestrator starts every walker. The agent that writes a change never approves it.
 
 ## Scale
 

@@ -48,7 +48,7 @@ Add these where the product has them:
 
 ## Brief template
 
-Every brief has this shape and nothing more. The brief checker rejects one that names a screen, a button, a URL past the entry point or a known issue.
+Every brief has this shape, plus the walker rules from `walkers.md`. The brief checker rejects one that names a screen, a button, a URL past the entry point or a known issue. The walker rules name none of these, so the checker accepts them.
 
 ```text
 You are: <what you know, what you want, how much effort you will spend>
