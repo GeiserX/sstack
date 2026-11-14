@@ -12,8 +12,10 @@ Each surface gets its own kit. Give a walker only its kit, where the harness let
 | Phone | The same, with touch emulation (`hasTouch`, `isMobile`, a phone user agent) at phone size | The main action hidden behind hover |
 | CLI and install | A shell in the sandbox with a clean home folder, and the published docs | A wrong command in the README, or a flag that silently does nothing |
 | HTTP API | A shell where `curl` is the surface, and the published docs | A documented example that returns an error |
-| MCP | An agent client with only the product's MCP server, set up from the docs. No browser | A tool whose description sends the agent the wrong way |
+| MCP | An agent client with only the product's MCP server, set up from the docs and started only through the launcher rule in step 3. No browser. Otherwise a scripted client (the MCP Inspector CLI), and the agent-driven goals are not reached | A tool whose description sends the agent the wrong way |
 | Docs | The published docs, and the shell the docs ask for | A quick start step that is missing |
+| Email | The fresh mailbox's web inbox, open in the same browser as the Web or Phone kit | A reset or sign-in link that lands on a 404 |
+| Native app | The published installer for the walker's platform, and the iOS Simulator or an Android emulator for a phone app | A release asset built for the wrong CPU architecture |
 
 For a URL target, plant the blocker with request interception instead of a rebuild.
 

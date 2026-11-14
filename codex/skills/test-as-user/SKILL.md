@@ -40,7 +40,7 @@ A walk is one walker session: one persona on one surface, through that persona's
 | normal | A web app with an API, at desktop and phone width | 9-16 |
 | broad | Web, phone, API, MCP and self-hosting | 17-24 |
 
-The hard cap is 32 walks in one run, with the probe walks and re-walks included. When the plan needs more, walk the basics first and list the rest as not reached.
+The table counts first-round walks only. The hard cap is 32 walks in one run, with the control walks and re-walks included. Before the first round, reserve part of the 32: the probe walk, one planted walk per kit (step 4), and the re-walks for each expected fix (step 9). When the table and the reserve together pass 32, cut the first round to fit: walk the basics first and list the rest as not reached.
 
 Walks cover two variants only: desktop and phone width, in the product's default language. Scripted sweeps over screenshots cover the rest: other widths, every other language, every theme, keyboard only and 200% zoom.
 
@@ -48,7 +48,7 @@ Walks cover two variants only: desktop and phone width, in the product's default
 
 ### 1. Read the rules and list the surfaces
 
-Read the repo's own `AGENTS.md`, `CLAUDE.md` and `CONTRIBUTING.md` first. They win over this skill where the two disagree. Read the last journey report if one exists (step 10 names it). Its open findings become journeys to walk again, and its "not reached" list is the first thing to try. Usability handoffs that `refine-loop` recorded as `NEEDS-FIX` also become journeys, and this skill's report is where they get closed.
+Read the repo's own `AGENTS.md`, `CLAUDE.md` and `CONTRIBUTING.md` first. They win over this skill where the two disagree. Read the last journey report if one exists (step 10 names it). Its open findings become journeys to walk again, and its "not reached" list is the first thing to try. Usability handoffs that `refine-loop` recorded as `NEEDS-FIX` in `REFINE-BACKLOG.md` in its state folder (`.refine-loop/` by default) also become journeys, and this skill's report is where they get closed.
 
 Then list every surface: install, web UI, phone width, CLI, HTTP API, MCP server, docs, email, any native app. Read the README, the docs site, the help output and the published packages. Also read the navigation, the route list, the MCP tool list, the language files and any theme switch. You may read the source here to find what exists.
 
@@ -62,9 +62,9 @@ The planner works from the user-visible rows of `surfaces.md`, the README, the d
 
 A journey is a goal in the person's words, a done condition, a starting state and a budget. The done condition says what the person has or knows ("you know what you spent on food in October"). It never names a screen or a URL. Order the journeys as a person meets them: install, sign in, get data in, then the main jobs.
 
-Plan three rounds: the basics, then the same goals with bad input and failures, then the coverage gaps from [Scale](#scale). Fill each brief from the template. A separate brief checker rejects a brief that names a screen, a button, a URL past the entry point or a known issue. The orchestrator has read the source, so it never edits a brief by hand.
+Plan three rounds: the basics, then the same goals with bad input and failures, then the coverage gaps from [Scale](#scale). Fill each brief from the template. A separate brief checker rejects a brief that names a screen, a button, a URL past the entry point or a known issue. Before it reads the real briefs, give it one planted brief that names a button and a URL past the entry point. It must reject that brief, or no brief counts as checked. The orchestrator has read the source, so it never edits a brief by hand.
 
-Done when every basic has a journey on every surface that offers it, or a line saying why not, and every brief passed the brief checker.
+Done when every basic has a journey on every surface that offers it, or a line saying why not. The brief checker rejected the planted brief, and every real brief passed it.
 
 ### 3. Build the clean start and start the walkers safely
 
@@ -72,26 +72,28 @@ Build a throwaway environment that the product has never touched. Use a fresh co
 
 Walk the real path. Seeding through the public API or an import is fine for a state that is not the journey under test. Database inserts, a development sign-in, demo modes and mocked services are not. Keep one only when a journey cannot run without it, and list that area as **unverified**. Passkeys run through a virtual authenticator (the Chrome DevTools Protocol `WebAuthn` domain). Phone width means touch emulation, never a narrow desktop window.
 
-On a URL that may be production, walk only steps that change nothing, unless the user says otherwise in the session. Sign-up there creates real accounts and sends real email, so delete every test identity at cleanup.
+On a URL that may be production, walk and sweep only steps that change nothing, unless the user says otherwise in the session. Sign-up there creates real accounts and sends real email, so delete every test identity at cleanup.
 
-The walker never gets the owner's credentials and never searches dotfiles, keychains or environment files. It creates its own identity by signing up, because sign-up is a journey. A third-party key that the docs ask for goes into the sandbox under a generic name such as `API_KEY`. A step only a person can do goes to the user and is recorded as "needs a person".
+The walker never gets the owner's credentials and never searches dotfiles, keychains or environment files. It creates its own identity by signing up, because sign-up is a journey. A third-party key that the docs ask for must come from the user in the session, for testing. It goes into the sandbox under a generic name such as `API_KEY`. Otherwise that journey is "needs a person". A step only a person can do goes to the user and is recorded as "needs a person".
 
 Each surface gets its own walker kit, listed in [references/walkers.md](references/walkers.md). Start each walker in one of two ways:
 
-1. As a separate headless session, only when it starts through the same launcher, the same account and the same network route as the current session.
+1. As a separate headless session, only when it starts through the same launcher, the same account and the same network route as the current session. In a workflow, a command-only launcher stage runs the launch command and returns the transcript path, so no agent starts another.
 2. Otherwise as a subagent whose brief blinds it. Its working folder is a scratch folder outside the repo. It gets only the public entry point, the persona, the goal and the budget.
 
 Never start a walker as a fresh CLI session with a new config folder or a new sign-in. Many people run each agent account through a fixed network route, and a sign-in from another route can get the account flagged. With either route the walker carries harness context that a new user lacks, so the scorer in step 5 is the gate. Use a route that leaves a full transcript: every tool call, its input and its result.
 
-Done when the sandbox exists, each kit the run needs is ready, and every walker has a route that leaves a transcript.
+A subagent loads the instruction files and memory of the session's working folder, whatever its brief says, and no transcript shows that. So for subagent walkers, the run starts from a folder outside the product repo and takes the repo as `REPO_PATH`. When the session started inside the repo, ask the user to start it again from outside. Before the first walk, start one subagent by the same route and ask it to quote any instruction file or memory in its context that names the product. If it quotes one, cap every walk at "done with help" and list the whole run as unverified.
+
+Done when the sandbox exists, each kit the run needs is ready, and every walker has a route that leaves a transcript. The context check found no product instruction file or memory.
 
 ### 4. Prove the walk and the scorer can fail
 
 In a scratch copy, plant one known blocker for each kit the run uses (the list is in [references/walkers.md](references/walkers.md)). Walk the journey that meets it. The scorer and the verifier must both catch it.
 
-Then run one probe walk deliberately unblinded: give it the repo path and let it read the source. The scorer must flag it. Until it does, no walk counts. After the controls, confirm by its commit or hash that the build under test is unmodified.
+Then run one probe walk deliberately unblinded. Give it the repo path, tell it to read one source file, and tell it to open one URL taken from the route list. The scorer must flag both. Also give the scorer a hand-made transcript with one instance of each behaviour step 5 lists. It must raise all six flags. Until both controls pass, no walk counts. After the controls, confirm by its commit or hash that the build under test is unmodified.
 
-Done when every planted blocker was caught by the scorer and the verifier, and the unblinded probe was flagged.
+Done when every planted blocker was caught by the scorer and the verifier, the probe got both flags, and the hand-made transcript got all six.
 
 ### 5. Walk the journeys, then score each walk
 
@@ -99,7 +101,7 @@ Give each walker its briefs one after another in one session. It keeps its memor
 
 Walk the basics first. When a basic blocks, start the later journeys from a state past it, built through the real path where you can. Mark them "started past blocker X". When the run may fix and a basic blocker has a small fix, fix it (steps 8 and 9) before the coverage-gap round.
 
-Walk each new-user basic twice from a fresh start, on two different models when the rules in step 3 allow both. Keep the union of the findings and mark the ones both walks hit.
+Walk each new-user persona's whole session twice, each time from a fresh sandbox, on two different models when the rules in step 3 allow both. Keep the union of the findings and mark the ones both walks hit.
 
 Then the scorer reads each transcript. It gives each journey one outcome against its done condition: **done**, **done with a minor issue**, **done with help** or **failed**. Reaching the done condition is the pass. An exit code of zero or a `2xx` response is not. It flags these from the transcript alone:
 
@@ -134,7 +136,7 @@ Give the verifier two worked examples first: one real finding, and one tester ar
 
 Before it calls an API broken, the verifier reads the request that the product's own client sends. It returns **reproduced**, **not reproduced** or **artefact**, with its own evidence and severity. Drop the last two. When the severities differ, keep the higher one. It merges findings by symptom and location, because it has not read the source.
 
-A security problem (an auth bypass, a data leak) goes to the repo's private security channel. It stays out of the report, PR bodies and screenshots until its fix lands.
+For a security problem (an auth bypass, a data leak), draft a report for the repo's private security channel. Show the user the exact text and send it only on their yes in the session. Fix it only through a private advisory fork, or leave the fix to the user. Never fix it in a public PR. It stays out of the report, PR bodies and screenshots until its fix lands.
 
 Done when every candidate is reproduced with evidence or dropped with a reason. With `--no-fix`, go to step 10.
 
@@ -144,12 +146,12 @@ The fixer reads the source and merges findings by root cause. It fixes the block
 
 Everything else gets status `NEEDS-FIX` in the report, with its evidence, proposed acceptance criteria and who should take it. A new feature, a redesign or a change to what the product promises goes to the owner. A blocker with an unclear root cause goes to `investigate`. A defect in a dependency gets an upstream issue: draft it, show the user the text, and post it only on their yes in the session.
 
-For each theme, in severity order:
+For each root cause, in severity order:
 
 1. Write the failing path as a test in the repo's existing test stack. Never add a test framework without asking. When no test can express it, the re-walk transcript is the regression evidence, and the PR says so.
 2. Make the smallest fix in a worktree, following the repo's own rules. Fixers run in parallel only on files that do not overlap.
 3. Run the repo's checks and the new test. A reviewer reads the diff against the finding and the test.
-4. Open one PR per theme with `file-pr`, with screenshots before and after for a UI change and a recording for a flow. Run the text through `readable` when it is installed. Screenshots show test identities and invented data only.
+4. Open one PR per root cause with `file-pr`, with screenshots before and after for a UI change and a recording for a flow. Run the text through `readable` when it is installed. Screenshots show test identities and invented data only.
 
 Stop after two fixes in a row are reverted because their reviewer rejected them or their re-walk failed. Stop too when a fix needs a file unrelated to its finding, and report why. Merge only when the user asked for merging in this session.
 

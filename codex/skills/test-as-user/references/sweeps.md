@@ -2,6 +2,8 @@
 
 The sweepers read this file in step 6. Each sweep is a script that you first run against a known violation and watch go red. Read every screenshot that a sweep takes.
 
+On a URL that may be production, sweep only steps that change nothing, unless the user says otherwise in the session. The input, destructive and revoke sweeps below then run only on a sandbox install, or are listed as not reached.
+
 ## Forced states
 
 Force these states on each screen and command of the journeys:
@@ -60,7 +62,7 @@ Take every screen at 320, 390, 820 and desktop width, in every shipped language 
 
 - **CLI.** From a clean home folder, run it with no arguments, with a mistyped command, with a setting missing, with no network and with its output piped. Read stdout, stderr and the exit code apart.
 - **HTTP API.** Run every documented example exactly as written, then with no auth and with a wrong key.
-- **MCP.** List the tools with a client such as the MCP Inspector's CLI mode. Give a fresh agent client a few realistic goals, each with one answer you can check. Revoke its key and expect a clear error.
+- **MCP.** List the tools with a client such as the MCP Inspector's CLI mode. Give an agent client a few realistic goals, each with one answer you can check. Start that client only through the launcher rule in step 3. Otherwise call the tools with the scripted client and list the agent-driven goals as not reached. Revoke its key and expect a clear error.
 
 ## Cross-surface truth
 
