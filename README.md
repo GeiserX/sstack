@@ -78,6 +78,7 @@ Pick one route for Claude Code. With both the plugin and the symlinks, every ski
 | [`research`](skills/research/SKILL.md) | `/research <question>` | Parallel specialists gather evidence from the code, its history and primary sources, then a ranked, cited answer. |
 | [`review-code`](skills/review-code/SKILL.md) | `/review-code` | Audits a whole codebase in bounded waves and publishes every verified finding by severity. |
 | [`tidy-repo`](skills/tidy-repo/SKILL.md) | `/tidy-repo` | Sweeps an established repo without changing what it does: audit, delete, restructure, refresh the living docs, and leave guards that keep it clean. |
+| [`test-as-user`](skills/test-as-user/SKILL.md) | `/test-as-user` | Uses the running product as new, advanced and agent users would, on every surface, fixes what stops a job it already offers, and walks each fix again. |
 | [`review-pr`](skills/review-pr/SKILL.md) | "review PR 42" | Three review lenses, one fixer and one adversarial verifier per pull request, then merge or close. |
 | [`implement`](skills/implement/SKILL.md) | `/implement <change>` | The smallest complete change, with independent parts split across agents that own separate files. |
 
@@ -118,7 +119,8 @@ None of them treats a stored goal as permission to merge, publish or deploy.
 
 - `full-loop` runs `sergio-loop` to done, then `refine-loop`.
 - `review-code` hands any finding that would change behaviour to `sergio-loop` or `investigate` instead of fixing it.
-- `file-pr`, `verified-reply`, `review-pr`, `kb-review`, `docs-loop`, `tidy-repo`, `grow-my-repo` and `submit-awesome` run their text through `readable` before it goes out.
+- `file-pr`, `verified-reply`, `review-pr`, `kb-review`, `docs-loop`, `tidy-repo`, `test-as-user`, `grow-my-repo` and `submit-awesome` run their text through `readable` before it goes out.
+- `test-as-user` opens its fixes with `file-pr`, and turns the usability handoffs that `refine-loop` records into journeys to walk.
 - `file-pr` uses the `github-video-embed` recipe when a UI change needs a recording in the pull request.
 - `docs-loop`, `refine-loop`, `sergio-loop` and `full-loop` share the loop contract in `shared/loop-contract.md`; the validator checks that every loop carries the same copy.
 

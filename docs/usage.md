@@ -113,9 +113,9 @@ One-shot skills that split a task across independent agents running at the same 
 what they found. Each one scales its panel to the task: it works alone on a trivial task, uses 2-3
 agents on a modest one, 4-7 on a normal one and 8-12 or more on a broad or risky one. Agents never
 spawn other agents. The fan-out runs on your default model and the checking of findings on your
-strongest one.
+strongest one. `tidy-repo` and `test-as-user` run every agent on your strongest model.
 
-Five of them run only when you call them by name: `/<name>` in Claude Code, `$<name>` in Codex.
+Six of them run only when you call them by name: `/<name>` in Claude Code, `$<name>` in Codex.
 `review-pr` can also start when you ask the agent to review a pull request.
 
 - `investigate` reproduces a failure, has competing hypotheses tested against each other, and names a
@@ -133,6 +133,15 @@ Five of them run only when you call them by name: `/<name>` in Claude Code, `$<n
   rounds find nothing new, then lands small PRs in order: delete, merge duplicates, restructure, polish.
   Each class of problem it removes gets a guard proven to fail, and it runs `docs-loop` over the living
   docs once the code has settled.
+- `test-as-user` uses the running product the way its people meet it: as a new, advanced, self-hosting
+  and agent user, through install, web, phone width, CLI, API, MCP and docs. Blinded walkers follow goals
+  in the person's words, and a separate scorer reads each transcript for shortcuts. It verifies every
+  finding, fixes what stops a job the product already offers, walks each fix again, and keeps
+  `docs/user-journeys.md` up to date. Its panel is counted in walks, with a hard cap of 32 in one run.
+  It uses 2-3 for one surface, 4-8 for two or three, 9-16 for a web app with an API and 17-24 for a
+  broad product. Only
+  desktop and phone width in the default language get walks. Scripted sweeps cover the other widths,
+  languages, themes and keyboard-only use. `--no-fix` stops after the report.
 - `research` answers a question from the code, its history and primary sources, with a claim, a
   source and a confidence level for each finding, then ranks the options.
 - `implement` makes the smallest complete change, gives each parallel writer its own files, then
@@ -143,6 +152,7 @@ Five of them run only when you call them by name: `/<name>` in Claude Code, `$<n
 /review-pr 42
 /review-code
 /tidy-repo
+/test-as-user
 /research How does connection pooling work in this app?
 /implement Add webhook retries with exponential backoff
 ```
@@ -229,7 +239,7 @@ dashes, semicolons, long sentences, stock words and phrases, bold labels and Tit
 when it finds one. You can run it on any file yourself.
 
 The skills that write for other people (`file-pr`, `verified-reply`, `review-pr`, `kb-review`, `docs-loop`,
-`tidy-repo`, `grow-my-repo` and `submit-awesome`) run their text through it before the text goes out.
+`tidy-repo`, `test-as-user`, `grow-my-repo` and `submit-awesome`) run their text through it before the text goes out.
 
 ```text
 /readable <the text, or the path of the file>
