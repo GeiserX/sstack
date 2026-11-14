@@ -1,6 +1,6 @@
 # Sweeps
 
-The sweepers read this file in step 6. Each sweep is a script that you first run against a known violation and watch go red. Read every screenshot that a sweep takes.
+The sweepers read this file in step 6. The repo rarely has these scripts, so the sweeper writes each one in the run's scratch folder (`sweeps/<name>`), using the repo's own browser driver when it has one. Each script prints one line per check, `PASS` or `FAIL`, with the screen, the check and the evidence path, and exits non-zero on any `FAIL`. Run it first against a known violation, such as a planted untranslated string or a button made too small, and keep that red output. Read every screenshot that a sweep takes.
 
 On a URL that may be production, sweep only steps that change nothing, unless the user says otherwise in the session. The input, destructive and revoke sweeps below then run only on a sandbox install, or are listed as not reached.
 
@@ -24,9 +24,10 @@ Read what the person sees. These rules apply:
 ## Input
 
 - Submit every form on a journey with its default values through the real browser, so the browser's own validation (`pattern`, `required`, `min`, `max`, `type`) is part of the test.
-- Then submit it empty, with junk, out of range and with a future date. Also try the other decimal separator, a duplicate, non-ASCII text and a very long string.
+- First write down each field's contract from the label, the help text and the docs: required or optional, its range, whether a future date is allowed. Assert against that contract, never against a fixed idea of bad input.
+- Then submit it empty, with junk, out of range and with a date the contract forbids. Also try the other decimal separator, a duplicate, non-ASCII text and a very long string.
 - Send the same values to the API, because agents and scripts send what forms block.
-- Bad input must be refused with the field named, and the person's input must stay in the form.
+- Input the contract forbids must be refused with the field named, and the person's input must stay in the form. Input the contract allows must be accepted.
 
 ## Destructive actions
 
@@ -34,7 +35,7 @@ List every action that deletes, overwrites, sends, pays, publishes or revokes, o
 
 - The confirmation names the object and the result.
 - There is undo, a recovery window or a dry run.
-- A call without a terminal refuses unless it has an explicit flag.
+- A CLI command run without a terminal refuses unless it has an explicit flag such as `--yes`. An API or MCP call is checked against its documented contract instead.
 - After the action, you can get the data back, or the confirmation said that you cannot.
 
 Then walk from the state that each one leaves (no profile, no passkey left, signed out). Every screen still names a next step, and every way in has a way out.
@@ -45,7 +46,7 @@ Take every screen at 320, 390, 820 and desktop width, in every shipped language 
 
 - No sideways scroll, and no text that runs past its own box.
 - Every action is in view and works without hover.
-- Touch targets are at least 24 by 24 CSS pixels (WCAG 2.2 AA). A target under 44 or 48 pixels breaks platform guidance and is a minor finding.
+- Touch targets are at least 24 by 24 CSS pixels (WCAG 2.2 AA). The criterion's exceptions still apply. They cover enough spacing, an inline link in text, an equivalent larger control, a size the browser sets, and an essential size. A target under 44 or 48 pixels breaks platform guidance and is a minor finding.
 - A script finishes each core journey with the keyboard alone, and focus stays visible and follows the reading order. A core journey that the keyboard cannot finish is a blocker.
 - Every control has a name. Run an axe scan in each theme. Zoom text to 200%. Honour reduced motion.
 - Each screen has one `h1`, a `main` landmark and a heading outline, as the stand-in for a screen reader.

@@ -27,7 +27,7 @@ Every check names who is trying, what they want and where they are. The evidence
 
 With no argument, work on the repo that contains the current directory and the product it ships. A URL names a running instance to walk instead of a fresh install. With `--no-fix`, no fixer starts: stop after step 7 and write the report.
 
-Run it as a workflow. This skill is your opt-in to call the Workflow tool. Without one, run the same stages as parallel agents yourself, in the same order. Pin every agent to the strongest model the session allows. An unpinned agent inherits whatever the session runs on. Agents never spawn agents, so the orchestrator starts every walker. The agent that writes a change never approves it.
+Run it as a workflow. This skill is your opt-in to call the Workflow tool. Without one, run the same stages as parallel agents yourself, in the same order. The orchestrator has read the source, so it never plans, walks, scores or verifies itself. When no separate agent can take those stages, stop and report the run as unverified. Pin every agent to the strongest model the session allows. An unpinned agent inherits whatever the session runs on. Agents never spawn agents, so the orchestrator starts every walker. The agent that writes a change never approves it.
 
 ## Scale
 
@@ -106,8 +106,8 @@ Walk each new-user persona's whole session twice, each time from a fresh sandbox
 Then the scorer reads each transcript. It gives each journey one outcome against its done condition: **done**, **done with a minor issue**, **done with help** or **failed**. Reaching the done condition is the pass. An exit code of zero or a `2xx` response is not. It flags these from the transcript alone:
 
 - a read of the product's source, its dotfiles, its instruction files or the journey report
-- a fetch of the product's source repo or its built bundles
-- a URL never shown as a link on an earlier page
+- a fetch of the product's source repo or its built bundles. A clone or download that the install docs ask for is allowed. Reading the source after it is still flagged.
+- a URL with no allowed source. Allowed sources are the brief's entry point, a link on an earlier page, and a URL shown in the docs, the help output or a response.
 - `curl`, `grep` or a script on a web or phone walk
 - a screenshot taken and never read
 - a click on an element not visible in the last screenshot
@@ -134,11 +134,11 @@ Give the verifier two worked examples first: one real finding, and one tester ar
 - **Findability or comprehension.** Check the transcript and screenshots: was the way forward visible from where the walker looked? When unsure, run a second fresh walk with the same brief.
 - **Intermittent.** Retry it three times. If it does not come back, keep it as "intermittent" with the original evidence.
 
-Before it calls an API broken, the verifier reads the request that the product's own client sends. It returns **reproduced**, **not reproduced** or **artefact**, with its own evidence and severity. Drop the last two. When the severities differ, keep the higher one. It merges findings by symptom and location, because it has not read the source.
+Before it calls an API broken, the verifier reads the request that the product's own client sends. It returns **reproduced**, **intermittent**, **not reproduced** or **artefact**, with its own evidence and severity. Keep the first two, with the original evidence for an intermittent one. Drop the last two. When the severities differ, keep the higher one. It merges findings by symptom and location, because it has not read the source.
 
 For a security problem (an auth bypass, a data leak), draft a report for the repo's private security channel. Show the user the exact text and send it only on their yes in the session. Fix it only through a private advisory fork, or leave the fix to the user. Never fix it in a public PR. It stays out of the report, PR bodies and screenshots until its fix lands.
 
-Done when every candidate is reproduced with evidence or dropped with a reason. With `--no-fix`, go to step 10.
+Done when every candidate is reproduced or intermittent with evidence, or dropped with a reason. With `--no-fix`, go to step 10.
 
 ### 8. Fix what makes an existing job doable
 
