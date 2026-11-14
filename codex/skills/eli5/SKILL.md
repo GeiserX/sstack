@@ -9,7 +9,8 @@ This is the Codex copy of this skill. Read the rest of it with these translation
 
 - Agents launched in parallel: spawn each one with `spawn_agent` before waiting on any, then collect the
   results with `wait_agent`. Tell every agent you spawn not to spawn agents of its own. If subagents are
-  unavailable, run each lane yourself, one after another.
+  unavailable, follow the skill's own rule for that case. Only when it has none, run each lane yourself,
+  one after another.
 - "Your default model" and "your strongest model": spawn the agent with an `agent_type` whose role file in
   `~/.codex/agents/` sets `model` and `model_reasoning_effort`. An agent without a role runs on the
   session's model.
