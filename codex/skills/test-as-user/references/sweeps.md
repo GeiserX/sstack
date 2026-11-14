@@ -34,7 +34,7 @@ Read what the person sees. These rules apply:
 List every action that deletes, overwrites, sends, pays, publishes or revokes, on every surface. Run them only on test data. For each one, check these points:
 
 - The confirmation names the object and the result.
-- Undo, a recovery window or a dry run works where the product offers one. When the real action has no undo and no recovery window, the confirmation warns that the result is final. A dry run does not remove that need.
+- Undo, a recovery window or a dry run works where the product offers one. When the real action has no undo and no recovery window, the confirmation warns that the result is final. For an API or MCP call, its documented contract says so instead. A dry run does not remove that need.
 - A CLI command run without a terminal refuses unless it has an explicit flag such as `--yes`. An API or MCP call is checked against its documented contract instead.
 - After the action, you can get the data back, or the confirmation said that you cannot.
 
