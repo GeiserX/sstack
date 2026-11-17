@@ -23,13 +23,13 @@ People read docs in a browser while they type in a terminal. A CLI or docs walke
 
 - For a URL target, plant the blocker with request interception or a browser init script instead of a rebuild.
 - Plant on the destination as well as on the link. A walker that sees an address as plain text types it and skips a dead link.
-- A hover-only plant can be skipped by opening a URL from the accessibility snapshot. The scorer's visibility flag catches that, so the plant still counts.
+- A hover-only plant can be skipped by opening a URL from the accessibility snapshot. The scorer flags that visit, but the plant is not caught until the verifier reproduces it as a finding. When the walker skipped it, plant it where the walker will meet it and walk again.
 - For the CLI kit, point the documented clone at a planted local copy with git's `url.insteadOf` in the walker's clean home folder. Add both the `.git` form and the bare form of the URL, or the clone URL ends in `.git.git`.
 - Run the verifier inside the planted environment too.
 
 ## Starting a walker
 
-- A sub-session that the harness starts for the orchestrator can open in the orchestrator's project, whatever folder you ask for, and then it loads that project's instruction files. It cannot walk. Use it only for stages that may read the source.
+- A sub-session that the harness starts for the orchestrator can open in the orchestrator's project, whatever folder you ask for, and then it loads that project's instruction files. Such a sub-session fails the context check in step 3 and cannot walk. Use it only for stages that may read the source. A sub-session that starts outside the repo and passes the check can still walk.
 - A headless agent CLI started from a shell with no terminal can wait forever for more input. Close its standard input.
 - A headless agent CLI can refuse MCP tool calls when it has nobody to ask. Set the walker's browser server to approve its own tool calls, and no other server.
 - For a clean home folder, set `HOME` after the launcher and call the agent binary itself. A launcher or wrapper that reads `HOME` breaks when `HOME` changes first.

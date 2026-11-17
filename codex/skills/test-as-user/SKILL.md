@@ -59,6 +59,8 @@ Done when every surface has a row with an entry point and its origin, or is out 
 
 ### 2. Write personas, journeys and briefs
 
+Check the machine the walks will run on before the planner writes a brief, because a brief that promises a missing tool sends every walker the wrong way. Start each runtime the documented journeys need, such as a JVM. When a journey uses a container runtime, also run one container with a bind mount from the walk folder. A container runtime inside a VM often shares only the home folder. Seed the clean home folder with what a real user already has, such as the package manager on `PATH`. Give the planner what started and what did not. When a runtime cannot start on this machine, its journeys are unverified here. Walk them on a machine where it starts, or list them as not reached.
+
 The planner works from the user-visible rows of `surfaces.md`, the README, the docs and the help text. It never reads the source, so the journeys follow what the product promises. The personas, the basic journeys and the brief template are in [references/journeys.md](references/journeys.md).
 
 A journey is a goal in the person's words, a done condition, a starting state and a budget. The done condition says what the person has or knows ("you know what you spent on food in October"). It never names a screen or a URL. Order the journeys as a person meets them: install, sign in, get data in, then the main jobs.
@@ -86,8 +88,6 @@ Never start a walker as a fresh CLI session with a new config folder or a new si
 
 A subagent loads the instruction files and memory of the session's working folder, whatever its brief says, and no transcript shows that. So for subagent walkers, the run starts from a folder outside the product repo and takes the repo as `REPO_PATH`. When the session started inside the repo, ask the user to start it again from outside. Before the first walk, start one subagent by the same route and ask it to quote any instruction file or memory in its context that names the product. If it quotes one, cap every walk at "done with help" and list the whole run as unverified.
 
-Check the sandbox before the planner describes it, because a brief that promises a missing tool sends every walker the wrong way. Start every runtime the docs need, such as a JVM or a container runtime, and run one container with a bind mount from the walk folder. A container runtime inside a VM often shares only the home folder. Seed the clean home folder with what a real user already has, such as the package manager on `PATH`. When a runtime cannot start on this machine, its journeys are unverified here. Walk them on a machine where it starts, or list them as not reached.
-
 Done when the sandbox exists, each kit the run needs is ready, and every walker has a route that leaves a transcript. The context check found no product instruction file or memory.
 
 ### 4. Prove the walk and the scorer can fail
@@ -111,7 +111,7 @@ Then the scorer reads each transcript. It gives each journey one outcome against
 - a read of the product's source, its dotfiles, its instruction files or the journey report
 - a fetch of the product's source repo or its built bundles. A clone or download that the install docs ask for is allowed. Reading the source after it is still flagged.
 - a URL with no allowed source. Allowed sources are the brief's entry point, a link on an earlier page, and a URL shown in the docs, the help output or a response.
-- `curl`, `grep` or a script that touches the product on a web or phone walk. A shell that only writes the walker's own log is fine.
+- any shell command on a web or phone walk, such as `curl`, `wget`, `grep` or a script, except one that only writes the walker's own log
 - a screenshot taken and never read
 - a click on an element not visible in the last screenshot, or a visit to a URL taken from such an element. An accessibility snapshot lists hidden elements too.
 
