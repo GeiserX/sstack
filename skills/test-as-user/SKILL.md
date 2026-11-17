@@ -71,6 +71,8 @@ Never start a walker as a fresh CLI session with a new config folder or a new si
 
 A subagent loads the instruction files and memory of the session's working folder, whatever its brief says, and no transcript shows that. So for subagent walkers, the run starts from a folder outside the product repo and takes the repo as `REPO_PATH`. When the session started inside the repo, ask the user to start it again from outside. Before the first walk, start one subagent by the same route and ask it to quote any instruction file or memory in its context that names the product. If it quotes one, cap every walk at "done with help" and list the whole run as unverified.
 
+Check the sandbox before the planner describes it, because a brief that promises a missing tool sends every walker the wrong way. Start every runtime the docs need, such as a JVM or a container runtime, and run one container with a bind mount from the walk folder. A container runtime inside a VM often shares only the home folder. Seed the clean home folder with what a real user already has, such as the package manager on `PATH`. When a runtime cannot start on this machine, its journeys are unverified here. Walk them on a machine where it starts, or list them as not reached.
+
 Done when the sandbox exists, each kit the run needs is ready, and every walker has a route that leaves a transcript. The context check found no product instruction file or memory.
 
 ### 4. Prove the walk and the scorer can fail
@@ -94,9 +96,9 @@ Then the scorer reads each transcript. It gives each journey one outcome against
 - a read of the product's source, its dotfiles, its instruction files or the journey report
 - a fetch of the product's source repo or its built bundles. A clone or download that the install docs ask for is allowed. Reading the source after it is still flagged.
 - a URL with no allowed source. Allowed sources are the brief's entry point, a link on an earlier page, and a URL shown in the docs, the help output or a response.
-- `curl`, `grep` or a script on a web or phone walk
+- `curl`, `grep` or a script that touches the product on a web or phone walk. A shell that only writes the walker's own log is fine.
 - a screenshot taken and never read
-- a click on an element not visible in the last screenshot
+- a click on an element not visible in the last screenshot, or a visit to a URL taken from such an element. An accessibility snapshot lists hidden elements too.
 
 Any flag caps that journey at "done with help". A read of the source or an instruction file voids every pass in that walk, and its failures still count as findings. The scorer also records the time to the first useful result, from transcript timestamps.
 
@@ -123,6 +125,8 @@ Give the verifier two worked examples first: one real finding, and one tester ar
 Before it calls an API broken, the verifier reads the request that the product's own client sends. It returns **reproduced**, **intermittent**, **not reproduced** or **artefact**, with its own evidence and severity. Keep the first two, with the original evidence for an intermittent one. Drop the last two. When the severities differ, keep the higher one. It merges findings by symptom and location, because it has not read the source.
 
 For a security problem (an auth bypass, a data leak), draft a report for the repo's private security channel. Show the user the exact text and send it only on their yes in the session. Fix it only through a private advisory fork, or leave the fix to the user. Never fix it in a public PR. It stays out of the report, PR bodies and screenshots until its fix lands.
+
+Verifiers that each take one group of walks cannot merge findings across groups, and several walkers often report the same line. So before step 8, one merge pass reads every kept finding together.
 
 Done when every candidate is reproduced or intermittent with evidence, or dropped with a reason. With `--no-fix`, go to step 10.
 
